@@ -1,0 +1,46 @@
+# Docker volumes and data
+**/volumes/
+**/data/
+**/*_data/
+docker-volumes/
+
+# Environment files with sensitive data
+**/.env
+!**/.env.example
+
+# Docker runtime files
+**/.dockerignore
+**/docker-compose.override.yml
+
+# Logs
+**/*.log
+**/logs/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+**/*.tmp
+**/*.temp
+**/.cache/
+
+# Docker build context
+**/build/
+**/dist/
+
+# Backup files
+**/*.bak
+**/*.backup
