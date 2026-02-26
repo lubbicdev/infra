@@ -2,13 +2,6 @@
 
 echo "🚀 Installing Portainer..."
 
-# Check if Docker is installed
-if ! command -v docker &> /dev/null
-then
-  echo "❌ Docker not found. Please install it first."
-  exit 1
-fi
-
 # Create volume (if it doesn't exist)
 echo "📦 Creating volume..."
 docker volume create portainer_data >/dev/null 2>&1
