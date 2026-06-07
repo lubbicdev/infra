@@ -4,6 +4,12 @@ set -e
 NETWORK_NAME="infra"
 SERVICE_NAME="postgres"
 
+if [ ! -f ".env" ]; then
+  echo "❌ .env file not found. Copy .env.example and fill in the values:"
+  echo "   cp .env.example .env && nano .env"
+  exit 1
+fi
+
 echo "🔍 Checking if the '$NETWORK_NAME' Docker network exists..."
 if ! docker network inspect "$NETWORK_NAME" >/dev/null 2>&1; then
   echo "🌐 Creating Docker network '$NETWORK_NAME'..."
