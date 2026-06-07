@@ -15,13 +15,13 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres-init.sql:/docker-entrypoint-initdb.d/postgres-init.sql:ro
     ports:
-      - "5432:5432"   
+      - "5432:5432"
     networks:
-      - postgres
+      - infra
 
 volumes:
   postgres_data:
 
 networks:
-  postgres:
+  infra:
     external: true

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-NETWORK_NAME="redis"
+NETWORK_NAME="infra"
 SERVICE_NAME="redis"
 
 echo "🔍 Checking if the '$NETWORK_NAME' Docker network exists..."

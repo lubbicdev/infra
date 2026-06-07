@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-NETWORK_NAME="postgres"
+NETWORK_NAME="infra"
 SERVICE_NAME="postgres"
 
 echo "🔍 Checking if the '$NETWORK_NAME' Docker network exists..."
