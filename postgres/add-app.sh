@@ -62,6 +62,12 @@ echo "✅ docker-compose.yml atualizado"
 # ────────────────────────────────────────────────────────────
 # 3. Atualizar postgres-init.sh
 # ────────────────────────────────────────────────────────────
+
+if [ ! -f "postgres-init.sh" ]; then
+  printf '#!/bin/bash\nset -e\n\n# Auto-managed by add-app.sh\n\n# TEMPLATE\n' > postgres-init.sh
+  echo "✅ postgres-init.sh criado"
+fi
+
 BLOCK_FILE=$(mktemp)
 
 cat > "$BLOCK_FILE" << BLOCK_EOF
@@ -90,8 +96,11 @@ if grep -q "^# TEMPLATE" postgres-init.sh; then
     { print }
   ' postgres-init.sh > postgres-init.tmp && mv postgres-init.tmp postgres-init.sh
 else
-  cat "$BLOCK_FILE" >> postgres-init.sh
-  echo "⚠️  Marcador não encontrado — bloco adicionado ao final do arquivo."
+  {
+    printf '#!/bin/bash\nset -e\n\n# Auto-managed by add-app.sh\n\n# TEMPLATE\n'
+    cat "$BLOCK_FILE"
+  } > postgres-init.tmp && mv postgres-init.tmp postgres-init.sh
+  echo "⚠️  Marcador não encontrado — arquivo recriado com o bloco."
 fi
 
 rm -f "$BLOCK_FILE"

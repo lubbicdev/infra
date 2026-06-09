@@ -19,10 +19,10 @@ else
 fi
 
 echo "📦 Starting PostgreSQL container..."
-docker compose up -d $SERVICE_NAME
+docker compose up --build -d $SERVICE_NAME
 
 echo "🚀 PostgreSQL is starting up..."
 docker ps --filter "name=${SERVICE_NAME}"
 
 echo "💡 Tip: to view PostgreSQL logs, run:"
-echo "   docker logs postgres_server"
+echo "   docker logs -f postgres_server"
