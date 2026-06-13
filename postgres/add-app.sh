@@ -75,15 +75,19 @@ cat > "$BLOCK_FILE" << BLOCK_EOF
 # ============================================================
 # ${APP_NAME} Application
 # ============================================================
-psql -v ON_ERROR_STOP=1 --username "\$POSTGRES_USER" --dbname "\$POSTGRES_DB" \\
-  -c "CREATE DATABASE ${APP_DB};" \\
-  -c "CREATE USER ${APP_USER} WITH PASSWORD '\$${ENV_KEY}';" \\
-  -c "GRANT ALL PRIVILEGES ON DATABASE ${APP_DB} TO ${APP_USER};"
+if [ -z "\$${ENV_KEY}" ]; then
+  echo "WARNING: ${ENV_KEY} not set, skipping ${APP_NAME} setup" >&2
+else
+  psql -v ON_ERROR_STOP=1 --username "\$POSTGRES_USER" --dbname "\$POSTGRES_DB" \\
+    -c "CREATE DATABASE ${APP_DB};" \\
+    -c "CREATE USER ${APP_USER} WITH PASSWORD '\$${ENV_KEY}';" \\
+    -c "GRANT ALL PRIVILEGES ON DATABASE ${APP_DB} TO ${APP_USER};"
 
-psql -v ON_ERROR_STOP=1 --username "\$POSTGRES_USER" --dbname "${APP_DB}" \\
-  -c "GRANT ALL ON SCHEMA public TO ${APP_USER};" \\
-  -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ${APP_USER};" \\
-  -c "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO ${APP_USER};"
+  psql -v ON_ERROR_STOP=1 --username "\$POSTGRES_USER" --dbname "${APP_DB}" \\
+    -c "GRANT ALL ON SCHEMA public TO ${APP_USER};" \\
+    -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ${APP_USER};" \\
+    -c "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO ${APP_USER};"
+fi
 
 BLOCK_EOF
 
